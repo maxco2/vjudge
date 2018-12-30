@@ -1,3 +1,7 @@
+#include<vector>
+#include<map>
+using mii=map<int,int>;
+using vint=vector<int>;
 vint sz;
 vint top;
 vint heavy;
