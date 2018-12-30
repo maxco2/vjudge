@@ -5,51 +5,46 @@
 #include <vector>
 #define FILL(n, value) std::fill(std::begin(n), std::end(n), value)
 using namespace std;
-bool m[200000][200000];
-int maxsum = 0;
-bool visited[200000];
-// void bfs(int pos, int &sum, int dist)
-//{
-// std::queue<int> q;
-// q.push(pos);
-// while (!q.empty())
-//{
-// pos = q.front();
-// q.pop();
+struct Vertex
+{
+    int w=0;
+    bool visited=false;
+    std::vector<int> links;
+    void reset(){visited=false;}
+};
+std::vector<Vertex> map;
 
-// visited[pos] = true;
-// for (int i = 0; i < n; ++i)
-// if (m[pos][i] && !visited[i])
-//{
-// q.push(i);
-//}
-//}
-//}
+void dfs(int pos,int &sum,int dist)
+{
+    sum+=map[pos].w*dist;
+    map[pos].visited=true;
+    for(auto i:map[pos].links)
+    if(!map[i].visited)
+    dfs(i,sum,dist+1);
+}
 
 int main()
 {
-    std::vector<int> vertex(200000, -1);
+    int maxsum=0;
     int n;
     cin >> n;
-    FILL(vertex, -1);
+    map.resize(n);
     for (int i = 0; i < n; ++i)
         {
-            int d;
-            cin >> d;
-            vertex[i] = d;
+            cin >> map[i].w;
         }
     for (int i = 0; i < n - 1; ++i)
         {
             int st, ed;
             cin >> st >> ed;
-            m[st - 1][ed - 1] = 1;
-            m[ed - 1][st - 1] = 1;
+            map[st - 1].links.push_back(ed-1);
+            map[ed-1].links.push_back(st-1);
         }
     for (int i = 0; i < n; ++i)
         {
-            FILL(visited, false);
+            for(auto& i:map) i.reset();
             int sum = 0;
-            // bfs(i, sum, 0);
+            dfs(i, sum, 0);
             maxsum = sum > maxsum ? sum : maxsum;
         }
     cout << maxsum << endl;
