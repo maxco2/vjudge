@@ -3,49 +3,91 @@
 #include <iostream>
 #include <queue>
 #include <vector>
-#define FILL(n, value) std::fill(std::begin(n), std::end(n), value)
+#include <map>
+#include <memory>
+#define MAXN 200000
+#define FILL_RESIZE(container, value,size) std::fill(std::begin(container), std::end(container), value);\
+container.resize(size)
 using namespace std;
+using vint = vector<int>;
+using mii = map<int, int>;
+template <typename T>
+using uptr = unique_ptr<T>;
+
 struct Vertex
 {
-    int w=0;
-    bool visited=false;
+    int w = 0;
+    bool visited = false;
     std::vector<int> links;
-    void reset(){visited=false;}
+    void reset() { visited = false; }
 };
-std::vector<Vertex> map;
+std::vector<Vertex> tree;
 
-void dfs(int pos,int &sum,int dist)
+vint fa;
+vint wl;
+vint curAllWeights;
+int maxWL = 0;
+void dfs1(int pos, int father, int depth)
 {
-    sum+=map[pos].w*dist;
-    map[pos].visited=true;
-    for(auto i:map[pos].links)
-    if(!map[i].visited)
-    dfs(i,sum,dist+1);
+    fa[pos] = father;
+    wl[pos] += tree[pos].w * depth;
+    curAllWeights[pos] += tree[pos].w;
+    tree[pos].visited=true;
+    for (auto i : tree[pos].links)
+        if (!tree[i].visited)
+        {
+            dfs1(i, pos, depth + 1);
+            wl[pos] += wl[i];
+            curAllWeights[pos] += curAllWeights[i];
+        }
+}
+
+void dfs2(int pos, int fatherSum, int n)
+{
+    int curSum = 0;
+    int father = fa[pos];
+    if (father == -1)
+    {
+        curSum = maxWL = wl[pos];
+    }
+    else
+    {
+        curSum =
+            fatherSum +(curAllWeights[0]-curAllWeights[pos])-(curAllWeights[pos]);
+        maxWL = max(curSum, maxWL);
+    }
+    tree[pos].visited=true;
+    for (auto i : tree[pos].links)
+        if (!tree[i].visited)
+        {
+            dfs2(i, curSum, n);
+        }
 }
 
 int main()
 {
-    int maxsum=0;
     int n;
     cin >> n;
-    map.resize(n);
+    tree=vector<Vertex>(n);
+    fa=vint(n,-1);
+    wl=vint(n,0);
+    curAllWeights=vint(n,0);
+    // FILL_RESIZE(wl,0,n);
+    // FILL_RESIZE(fa,-1,n);
+    // FILL_RESIZE(curAllWeights,0,n);
     for (int i = 0; i < n; ++i)
-        {
-            cin >> map[i].w;
-        }
+    {
+        cin >> tree[i].w;
+    }
     for (int i = 0; i < n - 1; ++i)
-        {
-            int st, ed;
-            cin >> st >> ed;
-            map[st - 1].links.push_back(ed-1);
-            map[ed-1].links.push_back(st-1);
-        }
-    for (int i = 0; i < n; ++i)
-        {
-            for(auto& i:map) i.reset();
-            int sum = 0;
-            dfs(i, sum, 0);
-            maxsum = sum > maxsum ? sum : maxsum;
-        }
-    cout << maxsum << endl;
+    {
+        int st, ed;
+        cin >> st >> ed;
+        tree[st - 1].links.push_back(ed - 1);
+        tree[ed - 1].links.push_back(st - 1);
+    }
+    dfs1(0,-1,0);
+    for(int i=0;i<n;++i) tree[i].reset();
+    dfs2(0,0,n);
+    cout << maxWL<< endl;
 }
