@@ -359,6 +359,8 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla</li>
 
+<li>cf1092e</li>
+
 <li>cf1092f</li>
 
 <li>OJ注意事项</li>
@@ -13071,7 +13073,7 @@ Error message and password prompt
 <div created="20181230122507509" modified="20181230122507509" title="$:/state/showeditpreview">
 <pre>yes</pre>
 </div>
-<div created="20181230122505774" modified="20181230130426247" title="$:/state/sidebar">
+<div created="20181230122505774" modified="20181231023822144" title="$:/state/sidebar">
 <pre>yes</pre>
 </div>
 <div created="20181230122046786" modified="20181230122047679" title="$:/state/tab--86143343">
@@ -13086,7 +13088,7 @@ Error message and password prompt
 <div created="20181230120441814" modified="20181230130428121" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/Open</pre>
 </div>
-<div created="20181230134132564" list="导航 OJ注意事项" modified="20181230134132564" title="$:/StoryList">
+<div created="20181231021345399" list="导航 cf1092e cf1092f" modified="20181231021408763" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -13933,6 +13935,23 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
     }
 }</pre>
 </div>
+<div created="20181231021420694" modified="20181231023807439" tags="树直径" title="cf1092e">
+<pre>
+&lt;&lt;&lt;
+求森林的生成树连接边并使树直径最小
+&lt;&lt;&lt;
+
+
+!! 关键点
+* 树的直径计算，两次dfs或bfs，一次找到其中之一最远点，另一次找另一最远点
+* 树中心，直径中点，最多两个
+* 树中心连接
+** 这是卡了最久的地方，这里需要有一个策略去选择树的中心连接，随便连接树的中心可以的过17个case
+*** 理想的状况星型拓扑形状，此时直径显然最小（关键）
+*** 贪心选择两个最短的直径或最长的直径
+**** 如果选择最短的会出现这样一种状况，例如4个点，每次连接两个点，这样形成只有一个边两个点的两棵子树，而无法组成星型。
+**** 但如果每次选择最长的两个，或者换句话说，将其他所有较小的连接最大直径那棵树上（由于最大直径两棵树连接依然直径最大），可以构造出星形图案。</pre>
+</div>
 <div created="20181230121856142" modified="20181230130252488" title="cf1092f">
 <pre>!! 关键点
 设所求和为
@@ -14014,7 +14033,7 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 ** 首尾选较小字母
 ** 首尾一样则判断下一位</pre>
 </div>
-<div created="20181230120502342" modified="20181230130526707" title="导航">
+<div created="20181230120502342" modified="20181231021406503" title="导航">
 <pre>!! [[OJ注意事项]]
 
 !! hdu
@@ -14026,7 +14045,8 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 * [[poj3617]]
 
 !!codeforce
-* [[cf1092f]]</pre>
+* [[cf1092f]]
+* [[cf1092e]]</pre>
 </div>
 
 </div>
