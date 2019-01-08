@@ -137,6 +137,8 @@ Error message and password prompt
 
 <p>This <a class="tc-tiddlylink-external" href="https://tiddlywiki.com" rel="noopener noreferrer" target="_blank">TiddlyWiki</a> contains the following tiddlers:</p><p><ul>
 
+<li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/close-all</li>
+
 <li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/home</li>
 
 <li>$:/core</li>
@@ -359,17 +361,39 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla</li>
 
+<li>aizu0033</li>
+
+<li>aizu0118</li>
+
+<li>aizu0121</li>
+
+<li>aizu0558</li>
+
 <li>cf1092e</li>
 
 <li>cf1092f</li>
 
 <li>cf1093d</li>
 
+<li>Draft of 'poj3061'</li>
+
+<li>lc11</li>
+
 <li>OJ注意事项</li>
+
+<li>poj1979</li>
 
 <li>poj2386</li>
 
+<li>poj3009</li>
+
+<li>poj3061</li>
+
+<li>poj3320</li>
+
 <li>poj3617</li>
+
+<li>poj3669</li>
 
 <li>导航</li>
 
@@ -383,6 +407,9 @@ Error message and password prompt
 <!--~~ Ordinary tiddlers ~~-->
 
 <div id="storeArea" style="display:none;">
+<div created="20190108134819523" modified="20190108134819523" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/close-all">
+<pre>show</pre>
+</div>
 <div created="20181230120454499" modified="20181230120454499" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/home">
 <pre>show</pre>
 </div>
@@ -13087,10 +13114,10 @@ Error message and password prompt
 <div created="20181230120448628" modified="20181230120448628" title="$:/state/tab/moresidebar-1850697562">
 <pre>$:/core/ui/MoreSideBar/All</pre>
 </div>
-<div created="20181230120441814" modified="20181230130428121" title="$:/state/tab/sidebar--595412856">
-<pre>$:/core/ui/SideBar/Open</pre>
+<div created="20181230120441814" modified="20190108143218865" title="$:/state/tab/sidebar--595412856">
+<pre>$:/core/ui/SideBar/Recent</pre>
 </div>
-<div created="20190101123502788" list="导航 cf1093d" modified="20190101123502788" title="$:/StoryList">
+<div created="20190108143243029" list="导航 poj3061" modified="20190108143243029" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -13106,7 +13133,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///D:/Win%20Folders/Desktop/oj/index.html&quot;
+            &quot;text&quot;: &quot;file:///home/max/vjudge/index.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -13126,7 +13153,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/D:/Win%20Folders/Desktop/oj/index.html&quot;
+            &quot;text&quot;: &quot;/home/max/vjudge/index.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -13937,6 +13964,24 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
     }
 }</pre>
 </div>
+<div created="20190108135100316" modified="20190108135124607" title="aizu0033">
+<pre>dfs状态搜索</pre>
+</div>
+<div created="20190108134923884" modified="20190108135032449" title="aizu0118">
+<pre>dfs四连通</pre>
+</div>
+<div created="20190108135755393" modified="20190108140228666" tags="坑 技巧" title="aizu0121">
+<pre>* 反向BFS,由最终状态向初始状态遍历
+* 技巧
+** 本题是一个最终状态,多个初始状态
+** 遍历时不清空队列
+** 与初始状态匹配时,要么不退出队列,直接返回,要么把所有子状态加入队列再返回</pre>
+</div>
+<div created="20190108135347736" modified="20190108135548613" tags="坑" title="aizu0558">
+<pre>* BFS最短距离
+* ''需要注意的是每次BFS必须清空队列
+''</pre>
+</div>
 <div created="20181231021420694" modified="20181231023807439" tags="树直径" title="cf1092e">
 <pre>&lt;&lt;&lt;
 求森林的生成树连接边并使树直径最小
@@ -13986,6 +14031,49 @@ $$
 * 加法乘法原理
 * 如果点只有一个，那么可以选任意三种数</pre>
 </div>
+<div modified="20190108143031159" title="Draft of 'poj3061'">
+<pre></pre>
+</div>
+<div created="20190108141058841" modified="20190108143232908" tags="技巧" title="lc11">
+<pre>! 【LC-11】Container With Most Water 
+$$
+\begin{aligned}
+dp[n] &amp;= max_{0\le i&lt;j&lt;N}(min(h[i],h[j])*(j-i))\\
+         &amp;=max(min_{0\le i&lt;N-1}(h[i],h[i+1]),min_{0\le i&lt;N-2}(h[i],h[i+2])*2,...,min_{0\le i &lt;1}(h[i],h[i+N-1])*(N-1))
+\end{aligned}
+$$
+       考察，
+$$
+\begin{aligned}
+max(min_{0\le i &lt;1}(h[i],h[i+N-1])*(N-1)),min_{0\le i &lt;2}(h[i],h[i+N-2])*(N-2)))) (\Gamma)\\
+不妨设h[0]&lt;h[N-1],
+则必有min(h[0],h[N-1])*(N-1)&gt;min(h[0],h[n-2])*(n-2)\\
+故 （\Gamma) =max(h[0]*(N-1),min(h[1],h[N-1])*(N-2))\\
+\end{aligned}
+$$
+同理，
+$$
+\begin{aligned}
+max(min_{0\le i &lt;1}(h[i],h[i+N-1])*(N-1)),min_{0\le i &lt;2}(h[i],h[i+N-2])*(N-2))),
+min_{0\le i&lt;3}(h[i],h[i+3])*(N-3)) (\Delta)\\
+不妨设h[0]&lt;h[N-1]&lt;h[1],
+则必有min(h[0],h[N-1])*(N-1)&gt;min(h[0],h[n-2])*(n-2),\\
+min(h[0],h[N-1])*(N-1)&gt;min(h[0],h[n-3])*(N-3)\\
+min(h[1],h[N-1])*(N-2)&gt;min(h[N-1],h[2])*(N-3)\\
+故 （\Delta) =max(h[0]*(N-1),h[N-1]*(N-2),min(h[1],h[N-2])*(N-3))\\
+\end{aligned}
+$$
+由归纳法可知，仅需计算n项的值，比暴力枚举$$O(C_{n}^{2})=O(n^2)$$,快一个数量级。
+
+!! 关键点：
+* $$dp[n]=f(g_{for\ i,j\ \in[0,N-1] }(p(i,j)))$$
+* $$f$$是关于g的可以部分求值函数，换句话说，运算$$f$$具有结合性
+* $$g$$是关于$$p$$的单调函数
+* ~~p则是关于$$i,j\ \in[0,N-1]$$的偏序函数~~
+
+
+</pre>
+</div>
 <div created="20181230130428915" modified="20181230130458272" tags="" title="OJ注意事项">
 <pre>!! 类型选择
 * int 最大值约21亿
@@ -14029,10 +14117,38 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 
 </pre>
 </div>
+<div created="20190108135157324" modified="20190108135204700" title="poj1979">
+<pre>dfs四连通</pre>
+</div>
 <div created="20181230120753382" modified="20181230121652671" title="poj2386">
 <pre>!! 关键点
 * 八连通方向dfs
 * 可以将W改为''’.''' 用来记录已遍历位置</pre>
+</div>
+<div created="20190108135227988" modified="20190108135308424" title="poj3009">
+<pre>dfs求状态树最小深度</pre>
+</div>
+<div created="20190108142826192" modified="20190108143251045" tags="技巧" title="poj3061">
+<pre>* 找到最小区间和大于等于指定大小的常数
+!! 关键点
+* 如果$$a[i,j]$$是最小区间,则$$a[i+1,j],a[i,j-1]$$一定不是最小区间
+* 在推进两个指针时,由上一点可知,继续推进也没有可行解,即推进指针循环退出条件是$$cur_{size}&lt;all_{size}$$
+* 形式
+** 推进右指针(找到可行解或失败)
+** check失败条件
+** 推进左指针,并更改当前解
+</pre>
+</div>
+<div created="20190108141435422" modified="20190108143036357" title="poj3320">
+<pre>* 可以覆盖区间所有元素最小区间
+!! 关键点
+* 如果$$a[i,j]$$是最小覆盖,则$$a[i+1,j],a[i,j-1]$$一定不是最小区间
+* 在推进两个指针时,由上一点可知,继续推进也没有可行解,即推进指针循环退出条件是$$cur_{size}&lt;all_{size}$$
+* 形式
+** 推进右指针(找到可行解或失败)
+** check失败条件
+** 推进左指针,并更改当前解
+</pre>
 </div>
 <div created="20181230121735987" modified="20181230121843698" title="poj3617">
 <pre>!! 关键点
@@ -14040,21 +14156,47 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 ** 首尾选较小字母
 ** 首尾一样则判断下一位</pre>
 </div>
-<div created="20181230120502342" modified="20190101123458800" title="导航">
+<div created="20190108135623565" modified="20190108135738253" tags="技巧" title="poj3669">
+<pre>* BFS最短距离
+* 技巧:
+** dis数组初始值-1,-1为未遍历的点</pre>
+</div>
+<div created="20181230120502342" modified="20190108143147454" title="导航">
 <pre>!! [[OJ注意事项]]
 
-!! hdu
+!! C/C++ I/O
 * [[hdu1002]]
 * [[hdu1008]]
 
-!! poj
-* [[poj2386]]
-* [[poj3617]]
+!!BFS
+* [[aizu0558]]
+* [[poj3669]]
+* [[aizu0121]]
+* [[cf1093d]]
 
-!!codeforce
+!!DFS
+* [[aizu0118]]
+* [[aizu0033]]
+* [[poj1979]]
+* [[poj2386]]
+* [[poj3009]]
 * [[cf1092f]]
 * [[cf1092e]]
-* [[cf1093d]]</pre>
+
+!!DP
+* [[cf1092f]]
+
+!!双指针
+* [[poj3320]]
+* [[poj3061]]
+* [[lc11]]
+
+
+!!贪心
+* [[poj3617]]
+
+
+</pre>
 </div>
 
 </div>
