@@ -17,10 +17,26 @@ int n, m;
 int nd[501];
 int value[501];
 int dp[MAXN];
-int naivedp[501][MAXN];
+void naiveSolve();
+void solve();
+int main()
+{
+    scanf("%d%d", &n, &m);
+    RFOR(i, n) { scanf(" %d%d", nd + i + 1, value + i + 1); }
+    // naiveSolve();
+    solve();
+}
+void solve()
+{
+    RANGE_FOR(i, 1, n + 1)
+    for (int j = m; j >= nd[i]; --j)
+        dp[j] = max(dp[j], dp[j - nd[i]] + value[i]);
+    printf("%d\n", dp[m]);
+}
 void naiveSolve()
 {
     // f[i,m]=max{f[i-1,m],f[i-1,m-nd[i]]+v[i]}
+    int naivedp[501][MAXN];
     for (int i = 1; i <= n; ++i)
         if (nd[i] > m)
             memcpy(naivedp[i], naivedp[i - 1], sizeof(int) * (m + 1));
@@ -33,12 +49,5 @@ void naiveSolve()
                             naivedp[i - 1][cost - nd[i]] + value[i]);
             }
     printf("%d\n", naivedp[n][m]);
-}
-void solve() {}
-int main()
-{
-    scanf("%d%d", &n, &m);
-    RFOR(i, n) { scanf(" %d%d", nd + i + 1, value + i + 1); }
-    naiveSolve();
 }
 
