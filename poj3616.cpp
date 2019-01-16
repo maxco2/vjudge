@@ -41,18 +41,36 @@ int main()
     sort(interval, interval + m);
     solve();
 }
-int dp[2000001];
-void solve()
+// int dp[2000001];//dp[j]  当前时间可挤奶最大值
+// void solve()//800+ms  //O(m*n+r)=10^9 常数很小,险过
+//{
+// int now = 0, pre = 1;
+// RUP(i, 0, m - 1)
+//{
+// int realed = interval[i].realed();
+// RUP(j, realed, n + r)
+//{
+// dp[j] = max(dp[j], dp[interval[i].st] + interval[i].ef);
+//}
+// swap(pre, now);
+//}
+// printf("%d\n", dp[n + r]);
+//}
+
+// if j.ed+r<=i.st
+// dp[i]=max(dp[j]+ef)
+// else  dp[i]=max(dp[j],ef)  //dp[i]第i个时间段一定挤奶最大值
+int dp[MAXN];
+void solve() // 0ms
 {
-    int now = 0, pre = 1;
     RUP(i, 0, m - 1)
     {
-        int realed = interval[i].realed();
-        RUP(j, realed, n + r)
+        dp[i] = interval[i].ef;
+        RUP(j, 0, i - 1)
         {
-            dp[j] = max(dp[j], dp[interval[i].st] + interval[i].ef);
+            if (interval[j].realed() <= interval[i].st)
+                dp[i] = max(dp[i], dp[j] + interval[i].ef);
         }
-        swap(pre, now);
     }
-    printf("%d\n", dp[n + r]);
+    printf("%d\n", dp[m - 1]);
 }
