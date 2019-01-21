@@ -41,9 +41,10 @@ int main()
 
 typedef int dp_t;
 dp_t dp[2][100005];
+// dp[i][j]  选择前i个物品,可以构成j的组合数
+bool pred(int i) { return i; }
 void solve()
 {
-    int res = 0;
     memset(dp, 0, sizeof(dp));
     dp[0][0] = 1;
     dp[1][0] = 1;
@@ -64,11 +65,5 @@ void solve()
         else
             continue;
     }
-
-    RUP(i, 1, m)
-    {
-        // printf("dp[%d]=%s\n", i, dp[pre][i] ? "true" : "false");
-        if (dp[pre][i]) res += 1;
-    }
-    printf("%d\n", res);
+    printf("%ld\n", count_if(dp[pre] + 1, dp[pre] + m + 1, pred));
 }
