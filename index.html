@@ -381,7 +381,13 @@ Error message and password prompt
 
 <li>OJ注意事项</li>
 
+<li>poj1742</li>
+
 <li>poj1979</li>
+
+<li>poj2229</li>
+
+<li>poj2385</li>
 
 <li>poj2386</li>
 
@@ -389,7 +395,11 @@ Error message and password prompt
 
 <li>poj3061</li>
 
+<li>poj3280</li>
+
 <li>poj3320</li>
+
+<li>poj3616</li>
 
 <li>poj3617</li>
 
@@ -13102,8 +13112,8 @@ Error message and password prompt
 <div created="20181230122507509" modified="20181230122507509" title="$:/state/showeditpreview">
 <pre>yes</pre>
 </div>
-<div created="20181230122505774" modified="20181231023822144" title="$:/state/sidebar">
-<pre>yes</pre>
+<div created="20181230122505774" modified="20190121110435965" title="$:/state/sidebar">
+<pre>no</pre>
 </div>
 <div created="20181230122046786" modified="20181230122047679" title="$:/state/tab--86143343">
 <pre>$:/core/ui/ControlPanel/Plugins/Installed/Plugins</pre>
@@ -13117,7 +13127,7 @@ Error message and password prompt
 <div created="20181230120441814" modified="20190108143218865" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/Recent</pre>
 </div>
-<div created="20190108143243029" list="导航 poj3061" modified="20190108143243029" title="$:/StoryList">
+<div created="20190121110420537" list="导航 poj1742 poj3280 poj3616 poj2385 poj2229" modified="20190121121548627" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -14117,8 +14127,121 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 
 </pre>
 </div>
+<div created="20190121121600590" modified="20190121125405298" title="poj1742">
+<pre>&lt;&lt;&lt;
+$$
+n\in[1,100]\\
+m\in[1,10^6]\\
+n_{i}\in[1,10^3]\\
+v_{i}\in[1,10^6]\\
+Timelimit:3s
+$$
+男人八题:
+给定n种不同个数$$n_{i}$$及价值$$v_{i}$$硬币,求可以组合成的价值数(不超过m)
+&lt;&lt;&lt;
+
+!! 思路1(以前i种物品可以表示价值j是否可以表示j进行dp)
+* $$ \begin{aligned}
+dp[i][j] &amp;= \bigcup_{k=0}^{min(j/v[i],n[i])}dp[i-1][j-k*v[i]]\\
+&amp;= dp[i-1][j]\cup\ \bigcup_{k=0}^{min(j/v[i]-1,n[i])}dp[i-1][j-v[i]-k*v[i]]-dp[i-1][j-v[i]-n[i]*v[i]]
+\end{aligned}
+$$
+* 可以发现由于布尔并运算无法保留$$\bigcup_{k=0}^{min(j/v[i]-2,n[i])}dp[i-1][j-v[i]-k*v[i]]$$
+的结果,导致减运算其实是有可能出错的,换句话说,布尔运算减法不具有记忆性即$$\\
+0+1-1=0\\ 1+0-1=0$$
+* 结合思路一的失败我们有了十分接近思路一的思路二
+
+!! 思路2(以前i种物品可以表示价值j可以表示j的组合数进行dp)
+*  $$假设j/v[i]-1\ge n[i]\\ \begin{aligned}
+dp[i][j] &amp;= \Sigma_{k=0}^{min(j/v[i],n[i])}dp[i-1][j-k*v[i]]\\
+&amp;= dp[i-1][j]+ \Sigma_{k=0}^{min(j/v[i]-1,n[i])}dp[i-1][j-v[i]-k*v[i]]-dp[i-1][j-v[i]-n[i]*v[i]]\\
+&amp;= dp[i-1][j]+dp[i][j-v[i]]-d[i-1][j-v[i]-n[i]*v[i]]
+\end{aligned}\\
+\therefore
+dp[i][j]=\begin{cases}
+ dp[i-1][j]+dp[i][j-v[i]]-d[i-1][j-v[i]-n[i]*v[i]] &amp;\text{if } j/v[i]-1\ge n[i] \\
+ dp[i-1][j]+dp[i][j-v[i]] &amp;\text{if } j/[i]-1&lt;n[i] \\
+ dp[i-1][j] &amp;\text{if }  j&lt;v[i]
+\end{cases}\\
+时间复杂度O(n*m)=O(10^9)
+$$
+* 十分危险的复杂度,要求循环尽可能简单,不要有多余运算(如dp等式if else),并且空间要滚动优化,ac循环代码如下
+```cpp
+#define RUP(v, st, ed) for (int v = st; v &lt;= ed; ++v)
+RUP(i, 1, n)
+{
+        if (coin[i].v &lt;= m)
+            {
+                copy(dp[pre], dp[pre] + coin[i].v, dp[now]);
+                int bound = min(coin[i].v * (coin[i].num + 1), m + 1);
+                RUP(j, coin[i].v, bound - 1)
+                dp[now][j] = dp[pre][j] + dp[now][j - coin[i].v];
+                RUP(j, bound, m)
+                dp[now][j] =
+                    dp[pre][j] + dp[now][j - coin[i].v] - dp[pre][j - bound];
+                swap(now, pre);
+            }
+        else
+            continue;
+}
+```
+</pre>
+</div>
 <div created="20190108135157324" modified="20190108135204700" title="poj1979">
 <pre>dfs四连通</pre>
+</div>
+<div created="20190121110442088" modified="20190121111136450" title="poj2229">
+<pre>
+&lt;&lt;&lt;
+任意一个数可由2的幂构成的和的组合数
+&lt;&lt;&lt;
+
+$$
+
+dp[n]=dp[n-1],n为奇数\\
+$$
+
+考察6,
+
+1) 1+1+1+1+1+1 
+
+2) 1+1+1+1+2 
+
+3) 1+1+2+2 
+
+4) 1+1+4 
+
+5) 2+2+2 =&gt; (1+1+1)*2
+
+6) 2+4   =&gt; (1+2)*2
+$$
+dp[n]=dp[n-1]+dp[n&gt;&gt;1],n为偶数
+$$
+</pre>
+</div>
+<div created="20190121111240642" modified="20190121113518829" title="poj2385">
+<pre>
+&lt;&lt;&lt;
+农夫约翰在他的田地里有两棵苹果树（方便编号为1和2），每棵树上都装满了苹果。Bessie在树上时无法到达苹果，所以她必须等待它们掉下来。然而，她必须抓住它们，因为当它们撞到地面时苹果会瘀伤（没有人想吃瘀伤的苹果）。贝茜是一个快速的食客，所以她捕获的苹果只需几秒钟即可食用。 
+
+每分钟，两棵苹果树中的一棵掉下一个苹果。如果她站在一棵树下面，可以抓住一个苹果。虽然贝茜可以快速地在两棵树之间行走（在不到一分钟的时间内），但她可以随时站在一棵树下。此外，奶牛不会进行大量的运动，因此她不愿意无休止地在树林间来回走动（因此错过了一些苹果）。 
+
+苹果下降（每分钟一个）T（1 &lt;= T &lt;= 1,000）分钟。Bessie愿意最多来回走动W（1 &lt;= W &lt;= 30）次。考虑到哪一棵树每分钟会掉落一个苹果，确定贝茜可以捕获的苹果的最大数量。Bessie从树1开始。
+&lt;&lt;&lt;
+
+!! 关键点
+* 合并同一苹果树连续掉下的情况,类似于多重背包n件物品
+* 以前i件物品和步数j动态规划(移动步数可已推出在哪棵树下)
+
+$$
+dp_{j\ge1}[i][j]=
+\begin{cases}
+max(dp[i-1][j],dp[i-1][j-1])+apple[i] &amp;\text{if } 在树下\\
+max(dp[i-1][j],dp[i-1][j-1]) &amp;\text{if } 不在树下
+\end{cases}
+$$
+
+</pre>
 </div>
 <div created="20181230120753382" modified="20181230121652671" title="poj2386">
 <pre>!! 关键点
@@ -14139,6 +14262,27 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 ** 推进左指针,并更改当前解
 </pre>
 </div>
+<div created="20190121115936615" modified="20190121121541811" title="poj3280">
+<pre>
+&lt;&lt;&lt;
+构造代价最低回文字符串,插入和删除字符均有代价值,求构造回文字符串最小代价
+&lt;&lt;&lt;
+
+!! 思路
+* dfs记忆化搜索,不断前后插入删除字符,首尾一致则考虑去掉首尾的字符串
+* 前后插入字符,必须与另一端一致,不然无法构造回文
+* $$dp[str_{before}]=dp[str_{modified}]+cost[insert\ or\ delete]$$
+* 插入一个字符,对于状态转移没有必要,相当于减少一个字符,例如$$dp[&quot;abca&quot;]=dp[&quot;bc&quot;]$$
+* 所以优化后,只需首尾删除字符,可以用双指针,避免字符串拷贝(如果拷贝必然TLE)
+* $$
+dfstail = dfs(st, ed - 1)+min(insval(mystr[ed - 1]), delval(mystr[ed - 1]))\\
+dfshead = dfs(st + 1, ed)+ min(delval(mystr[st]), insval(mystr[st]))\\
+res=min(dfstail,dfshead);
+$$
+
+
+</pre>
+</div>
 <div created="20190108141435422" modified="20190108143036357" title="poj3320">
 <pre>* 可以覆盖区间所有元素最小区间
 !! 关键点
@@ -14148,6 +14292,29 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 ** 推进右指针(找到可行解或失败)
 ** check失败条件
 ** 推进左指针,并更改当前解
+</pre>
+</div>
+<div created="20190121113725193" modified="20190121115850669" title="poj3616">
+<pre>
+&lt;&lt;&lt;
+$$
+M\in[1,10^3]\\
+N\in[1,10^6]\\
+EF\in[1,10^6]\\
+R\in[1,N]\\
+Time limit:1s
+$$
+M个可能重叠的时间段,某个时间段有权重EF,可停留最大时间为N,且每次访问完某个时间段需休息R个单位时间,求最大权重之和$$max_{sum_{EF}}$$
+&lt;&lt;&lt;
+
+!! 思路一(以前i个区间和当前时间j可得权重最大值进行dp)
+* O(M*(N+R))=O(10^9)  ,按道理说1s内,10^8基本是极限了,但仍然ac,可见数据很水
+* $$dp[j] = max(dp[j], dp[interval[i].st] + interval[i].ef)$$
+
+!!思路二(以第i个时间段一定访问,前i个时间段此时最大权重和进行dp)
+* O(M*M)=O(10^6) 游刃有余
+* $$dp[i] = max(dp[i], dp[j] + interval[i].ef)\ \text{if } interval[j].ed+R \le interval[i].st$$
+
 </pre>
 </div>
 <div created="20181230121735987" modified="20181230121843698" title="poj3617">
@@ -14161,7 +14328,7 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 * 技巧:
 ** dis数组初始值-1,-1为未遍历的点</pre>
 </div>
-<div created="20181230120502342" modified="20190108143147454" title="导航">
+<div created="20181230120502342" modified="20190121110045667" title="导航">
 <pre>!! [[OJ注意事项]]
 
 !! C/C++ I/O
@@ -14185,6 +14352,12 @@ for(int i=0;i&lt;n;++i) cin&gt;&gt;str[i];
 
 !!DP
 * [[cf1092f]]
+* [[poj3176]]
+* [[poj2229]]
+* [[poj2385]]
+* [[poj3616]]
+* [[poj3280]]
+* [[poj1742]]
 
 !!双指针
 * [[poj3320]]
