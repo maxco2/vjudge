@@ -39,11 +39,11 @@ int main()
 //%10e6
 // dp[T][X]=sum(dp[T-1][X-0..num[T]])
 #define MOD 1000000
-unsigned long long dp[2][100001];
+int dp[2][100001];
 void solve()
 {
     int now = 0, pre = 1;
-    unsigned long long res = 0;
+    int res = 0;
     dp[pre][0] = dp[now][0] = 1;
     RUP(i, 1, t)
     {
