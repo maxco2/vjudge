@@ -67,5 +67,5 @@ void solve()
         res += dp[pre][i];
         res %= MOD;
     }
-    printf("%llu\n", res);
+    printf("%d\n", res);
 }
