@@ -4,17 +4,21 @@
 #include<vector>
 #include<cstring>
 #include<cassert>
+#define NDEBUG
+//#include "catch.hpp"
+
 using namespace std; 
 #define MAXL 505
-int table[MAXL];
-int parent[MAXL];
-void LCIS(int arr1[], int n, int arr2[], int m) 
+typedef long long num;
+num table[MAXL];
+num parent[MAXL];
+void LCIS(num arr1[], int n, num arr2[], int m) 
 { 
     memset(table,0,sizeof(table));
     memset(parent,-1,sizeof(parent));
     for (int i=0; i<n; i++) 
     { 
-        int current = 0, last = -1; 
+        num current = 0, last = -1; 
         for (int j=0; j<m; j++) 
         { 
             if (arr1[i] == arr2[j]
@@ -25,26 +29,27 @@ void LCIS(int arr1[], int n, int arr2[], int m)
                 current = table[j],last = j; 
         } 
     } 
-    int* pos=max_element(table,table+m);
-    int idx=pos-table;
-    int  result=*pos;
+    num* pos=max_element(table,table+m);
+    num idx=pos-table;
+    num result=*pos;
     cout<<result<<endl;
     if(result>0)
     {
-        vector<int> lcis;
-        for (int i=0; idx!= -1; i++) 
+        vector<num> lcis;
+        for (num i=0; idx!= -1; i++) 
         { 
             lcis.push_back(arr2[idx]);
             idx = parent[idx]; 
         } 
-        for (int i=result-1; i!=0; i--) 
+	assert(lcis.size()==result);
+        for (num i=result-1; i!=0; i--) 
             cout<<lcis[i]<<" ";
         cout<<lcis[0];
-        cout<<endl;
     }
+        cout<<endl;
 } 
-int arr1[MAXL];
-int arr2[MAXL];
+num arr1[MAXL];
+num arr2[MAXL];
 int main() 
 { 
     int n1,n2;
